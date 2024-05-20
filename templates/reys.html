@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="destination-section">
+    <div class="container">
+       <div class="section-heading">
+          <div class="row align-items-end">
+            <div class="col-lg-5">
+             </div>
+          </div>
+       </div>
+       <div class="destination-inner destination-three-column">
+          <div class="row">
+             <div class="col-lg-7">
+                <div class="row">     
+                   {% for city in city %}                        
+                   <div class="col-sm-5">
+                      <div class="desti-item overlay-desti-item">                                   
+                         <figure class="desti-image">
+                            <img src="{{city.image.url}}" alt="">
+                         </figure>
+                         <div class="desti-content">
+                            <h3>
+                               <a href="{% url 'more' city.id %}">{{city.name}}</a>
+                            </h3>
+                            <div class="rating-start" title="Rated 5 out of 4">
+                               <span style="width: 53%"></span>
+                            </div>
+                         </div>
+                      </div>                                
+                   </div>    
+                   {% endfor %}                   
+                </div>
+             </div>
+             <div class="col-lg-5">
+                <div class="row"></div>
+                </div>
+             </div>
+          </div>
+          <div class="btn-wrap text-center">
+             <a href="{% url 'create_city' %}" class="button-primary">MALUMOT QOSHISH</a>
+          </div>
+       </div>
+    </div>
+ </section>
+<!-- packages html end -->
+
+{% endblock content %}
