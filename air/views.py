@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Air, Reys
+from .models import Category, Air, Reys, City
 from .forms import AirForm, CityForm
 
 # -------------------------------------------------------------------------------------------
@@ -62,17 +62,18 @@ def reys(request):
     return render(request, 'home.html', context={"reys": reys, "cats": categories})
 
 def city(request, id):
-    reys = get_object_or_404(Reys, id=id)
-    city = reys.reys.all()
+    rey = get_object_or_404(Reys, id=id)
+    city = rey.reys.all()
     reys = Reys.objects.all()
     categories = Category.objects.all()
     return render(request, 'reys.html', context={'city':city, "reys": reys, "cats": categories})
 
 
 def more(request, id):
-    reys = get_object_or_404(Reys, id=id)
-    city = Reys.objects.all()
-    return render(request, 'more.html', context={"city": city, 'reys': reys})
+    city = get_object_or_404(City, id=id)
+    reys = Reys.objects.all()
+    categories = Category.objects.all()
+    return render(request, 'more.html', context={"city": city, 'reys': reys, "cats": categories})
 
 
 
@@ -88,7 +89,7 @@ def create_city(request):
 
 
 def update_city(request, id):
-    city = get_object_or_404(Reys, id=id)
+    city = get_object_or_404(City, id=id)
     if request.method == "POST":
         form = CityForm(request.POST, request.FILES, instance=city)
         if form.is_valid():
@@ -101,6 +102,6 @@ def update_city(request, id):
 
 
 def delete_city(request, id):
-    city = get_object_or_404(Reys, id=id)
+    city = get_object_or_404(City, id=id)
     city.delete()
     return redirect('home')
